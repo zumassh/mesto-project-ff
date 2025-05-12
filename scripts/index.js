@@ -3,7 +3,7 @@ const cardsList = document.querySelector('.places__list');
 
 // Функция создания карточки
 function createCard(name, link, removeFunction) {
-    const card = cardTemplate.cloneNode(true);
+    const card = cardTemplate.querySelector('.card').cloneNode(true);
     const cardImg = card.querySelector('.card__image');
     const cardTitle = card.querySelector('.card__title');
     const deleteButton = card.querySelector('.card__delete-button');
