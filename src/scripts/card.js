@@ -48,24 +48,15 @@ export const removeCard = (evt, cardId) => {
 // обработка лайка
 export const likeCard = (button, cardId, likeCounter) => {
     const isLiked = button.classList.contains('card__like-button_is-active');
+    const likeMethod = isLiked ? deleteLike : putLike;
 
-    if (isLiked) {
-        deleteLike(cardId)
-            .then((updatedCard) => {
-                button.classList.remove('card__like-button_is-active');
-                likeCounter.textContent = updatedCard.likes.length;
-            })
-            .catch((err) => {
-                console.error('Ошибка при удалении лайка:', err);
-            });
-    } else {
-        putLike(cardId)
-            .then((updatedCard) => {
-                button.classList.add('card__like-button_is-active');
-                likeCounter.textContent = updatedCard.likes.length;
-            })
-            .catch((err) => {
-                console.error('Ошибка при постановке лайка:', err);
-            });
-    }
+    likeMethod(cardId)
+        .then((updatedCard) => {
+            button.classList.toggle('card__like-button_is-active');
+            likeCounter.textContent = updatedCard.likes.length;
+        })
+        .catch(err => {
+            isLiked ? `Ошибка при удалении лайка: ${err}`
+            : `Ошибка при постановке лайка: ${err}`;
+        })
 };

@@ -1,7 +1,7 @@
 import './pages/index.css';
 import { closeModal, openModal } from './scripts/modal';
 import { createCard, likeCard, removeCard } from './scripts/card';
-import { enableValidation, clearValidation } from './scripts/validation.js';
+import { enableValidation, clearValidation, disableSubmitButton } from './scripts/validation.js';
 import { getUser, getCards, setUser, addCard, changeAvatar } from './scripts/api.js';
 
 const cardTemplate = document.querySelector('#card-template').content;
@@ -46,7 +46,7 @@ Promise.all([getUser(), getCards()])
         });
     })
     .catch((err) => {
-        console.log(err);
+        console.error(err);
     });
 
 const openCard = (link, name) => {
@@ -87,8 +87,7 @@ addButton.addEventListener('click', () => {
     newCardForm.reset();
     clearValidation(newCardForm, validationConfig);
     const submitButton = newCardForm.querySelector(validationConfig.submitButtonSelector);
-    submitButton.disabled = true;
-    submitButton.classList.add(validationConfig.inactiveButtonClass);
+    disableSubmitButton(submitButton, validationConfig);
     openModal(addPopup);
 });
 
@@ -96,8 +95,7 @@ profileAvatar.addEventListener('click', () => {
     avatarForm.reset();
     clearValidation(avatarForm, validationConfig);
     const submitButton = avatarForm.querySelector(validationConfig.submitButtonSelector);
-    submitButton.disabled = true;
-    submitButton.classList.add(validationConfig.inactiveButtonClass);
+    disableSubmitButton(submitButton, validationConfig);
     openModal(avatarPopup);
 })
 
@@ -115,18 +113,16 @@ document.querySelectorAll('.popup').forEach((popup) => {
 editProfileForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    let name = nameInput.value;
-    let job = jobInput.value;
-
-    profileName.textContent = name;
-    profileDescription.textContent = job;
+    const name = nameInput.value;
+    const job = jobInput.value;
 
     const submitButton = evt.target.querySelector('.popup__button');
     submitButton.textContent = 'Сохранение...';
 
     setUser(name, job)
         .then((result) => {
-            console.log(result)
+            profileName.textContent = result.name;
+            profileDescription.textContent = result.about;
         })
         .catch((err) => {
             console.error(err);
@@ -145,7 +141,6 @@ newCardForm.addEventListener('submit', (evt) => {
     const submitButton = evt.target.querySelector('.popup__button');
 
     submitButton.textContent = 'Сохранение...';
-    submitButton.disabled = true;
 
     addCard(name, link)
         .then((cardData) => {

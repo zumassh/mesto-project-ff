@@ -1,6 +1,13 @@
 const myToken = 'd5859995-6c69-4052-bf8d-997a24acd60d';
 const baseURL = 'https://nomoreparties.co/v1/wff-cohort-41';
 
+const handleResponse = (res, resMessage) => {
+    if (res.ok) {
+        return res.json();
+    }
+    return Promise.reject(`${resMessage}: ${res.status}`);
+}
+
 export const getUser = () => {
     return fetch(`${baseURL}/users/me`, {
         method: 'GET',
@@ -10,10 +17,7 @@ export const getUser = () => {
         }
     })
         .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка получения данных о пользователе: ${res.status}`);
+            return handleResponse(res, 'Ошибка получения данных о пользователе');
         });
 }
 
@@ -26,10 +30,7 @@ export const getCards = () => {
         }
     })
         .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка получения карточек пользователей: ${res.status}`);
+            return handleResponse(res, 'Ошибка получения карточек пользователей');
         });
 }
 
@@ -46,10 +47,7 @@ export const setUser = (username, desc) => {
         })
     })
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка редактирования пользователя: ${res.status}`);
+            return handleResponse(res, 'Ошибка редактирования пользователя');
         })
 }
 
@@ -66,10 +64,7 @@ export const addCard = (cardName, cardLink) => {
         })
     })
         .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка при создании карточки: ${res.status}`);
+            return handleResponse(res, 'Ошибка при создании карточки');
         });
 }
 
@@ -81,10 +76,7 @@ export const deleteCard = (cardId) => {
         }
     })
         .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка при удалении карточки: ${res.status}`);
+            return handleResponse(res, 'Ошибка при удалении карточки');
         });
 }
 
@@ -96,11 +88,8 @@ export const putLike = (cardId) => {
             'Content-Type': 'application/json'
         }
     }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка при постановке лайка: ${res.status}`);
-        });
+        return handleResponse(res, 'Ошибка при постановке лайка');
+    });
 };
 
 export const deleteLike = (cardId) => {
@@ -111,11 +100,8 @@ export const deleteLike = (cardId) => {
             'Content-Type': 'application/json'
         }
     }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка при удалении лайка: ${res.status}`);
-        });
+        return handleResponse(res, 'Ошибка при удалении лайка');
+    });
 };
 
 export const changeAvatar = (avatarLink) => {
@@ -129,10 +115,7 @@ export const changeAvatar = (avatarLink) => {
             avatar: avatarLink
         })
     })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка при обновлении аватара: ${res.status}`);
-    })
+        .then((res) => {
+            return handleResponse(res, 'Ошибка при обновлении аватара');
+        })
 }
