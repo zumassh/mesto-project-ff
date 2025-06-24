@@ -1,0 +1,28 @@
+.popup__input_type_error {
+    border-bottom-color: red;
+}
+
+.form__input-error {
+    color: red;
+    font-size: 12px;
+}
+
+.popup__button_disabled {
+  opacity: 0.5;
+  pointer-events: none; 
+  background: #fff;
+  color: #b3b3b3;
+  border: 1px solid #b3b3b3;
+}
+
+.form__input-error_active {
+  opacity: 1;
+}
+
+.like__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 13px;
+  gap: 3px;
+}
