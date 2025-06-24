@@ -1,11 +1,3 @@
-// const config = {
-//   baseUrl: 'https://nomoreparties.co/v1/wff-cohort-41',
-//   headers: {
-//     authorization: 'd5859995-6c69-4052-bf8d-997a24acd60d',
-//     'Content-Type': 'application/json'
-//   }
-// }
-
 const myToken = 'd5859995-6c69-4052-bf8d-997a24acd60d';
 const baseURL = 'https://nomoreparties.co/v1/wff-cohort-41';
 
