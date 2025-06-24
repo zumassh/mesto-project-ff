@@ -37,7 +37,7 @@ Promise.all([getUser(), getCards()])
     .then(([userData, cardsArr]) => {
         profileName.textContent = userData.name;
         profileDescription.textContent = userData.about;
-        profileAvatar.style.backgroundImage = userData.avatar;
+        profileAvatar.style.backgroundImage = `url('${userData.avatar}')`;
         userId = userData._id;
 
         cardsArr.forEach((c) => {
@@ -177,7 +177,7 @@ avatarForm.addEventListener('submit', (evt) => {
 
     changeAvatar(avatarLink)
         .then((result) => {
-            console.log(result)
+            profileAvatar.style.backgroundImage = `url('${result.avatar}')`;
         })
         .catch((err) => {
             console.error(err);
